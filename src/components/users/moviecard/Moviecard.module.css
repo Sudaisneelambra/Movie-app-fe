@@ -1,0 +1,8 @@
+.mains{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    box-shadow: -1px 0px 8px 3px gray;
+    border-radius: 10px;
+    overflow: hidden;
+}

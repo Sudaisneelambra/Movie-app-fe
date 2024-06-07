@@ -1,0 +1,9 @@
+.mainHome{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    place-items: center;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}

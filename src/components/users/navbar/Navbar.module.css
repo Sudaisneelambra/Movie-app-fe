@@ -1,0 +1,36 @@
+
+.uls{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.movieImg , .logoutImg {
+    height: 60px !important;
+    padding-left: 30px;
+}
+.main{
+    height: 100%;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+.menu {
+    display: none;
+}
+
+@media(max-width:550px){
+    .uls{
+        display: none;
+    }
+    .logoutImg{
+        display: none;
+    }
+    .menu{
+        display: flex;
+        padding-right: 30px;
+        height: 45px;
+    }
+    .navbar{
+        justify-content: flex-end;
+    }
+}
