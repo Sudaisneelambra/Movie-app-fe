@@ -67,7 +67,7 @@ const SignupForm =()=>{
 
     return <>
     <div className={`${styles.main}  bg-[#b6b6c046] w-full h-screen grid place-items-center`}>
-        <form onSubmit={submitClicking} className={`${styles.form} w-[90%] md:w-[650px] h-[50%]  flex flex-col items-center rounded-md justify-evenly ${styles.glassEffect}`}>
+        <form  className={`${styles.form} w-[90%] md:w-[650px] h-[50%]  flex flex-col items-center rounded-md justify-evenly ${styles.glassEffect}`}>
           <h1 className={`text-[24px] font-bold`}>Signup Form</h1>
           <div className={`flex flex-col w-[90%]`}>
             <label htmlFor="name">Name</label>
@@ -105,7 +105,7 @@ const SignupForm =()=>{
               placeholder="Your Password"
             />
           </div>
-          <Button buttonvalue={'Sign up'} classname={'signup'}/>
+          <Button buttonvalue={'Sign up'} classname={'signup'} handleClick={submitClicking}/>
           <h1 className={`text-[12px] text-[red]`}>{message}</h1>
           <h1>You have Already an Account ? <Link to={'/'}><span className={`text-[#4cad4c]`}>Login</span> </Link> </h1>
         </form>

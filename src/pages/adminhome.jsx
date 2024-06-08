@@ -1,6 +1,26 @@
+import { Outlet } from "react-router-dom"
+import Navbar from "../components/shared/navbar/Navbar"
+
 const AdminHome = () =>{
+    const navlinks = [
+        {
+            name:'Add Card',
+            link:'/admin/addcard'
+        },
+        {
+            name:'View Cards',
+            link:'/admin/showcard'
+        },
+        {
+            name:'Show User',
+            link:'/showuser'
+        }
+    ]
     return <>
-        <h1>Admin Login page</h1>
+        <Navbar navLinks={navlinks}/>
+        <div className="content">
+                <Outlet />
+        </div>
     </>
 }
 

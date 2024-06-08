@@ -1,27 +1,35 @@
-import { useSelector } from "react-redux"
-import { selectUser } from "../features/userSlice"
-import Navbar from "../components/users/navbar/Navbar";
-import MovieCard from "../components/users/moviecard/MovieCard";
-import style from './CSS/userhome.module.css'
+
+import Navbar from "../components/shared/navbar/Navbar";
+import { Outlet } from "react-router-dom";
 
 const UserHome = () =>{
 
-    const data = useSelector(selectUser)
-    console.log(data);
+    
+    const navLinks =[
+        {
+            name:'Home',
+            link:'/home'
+        },
+        {
+            name:'Contact',
+            link:'/contact'
+        },
+        {
+            name:'Profile',
+            link:'/Profile'
+        },
+        {
+            name:'Links',
+            link:'/links'
+        }
+    ]
+
+   
 
     return <>
-        <Navbar />
-        <div className={`${style.mainHome} w-full`}>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-            <MovieCard/>
-
+        <Navbar navLinks={navLinks}/>
+        <div className="">
+            <Outlet/>
         </div>
     </>
 }

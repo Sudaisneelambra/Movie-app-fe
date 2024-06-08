@@ -21,7 +21,7 @@ const LoginForm = () => {
 
   const onSubmit = async (data) => {
     if (!data.email || !data.password) {
-      alert("Please fill in all fields");
+      alert("Please fill in all fieldsgfdfs");
     } else {
       await axiosInstance
         .post("/login", data)

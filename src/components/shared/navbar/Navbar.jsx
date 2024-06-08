@@ -5,10 +5,10 @@ import logout from '../../../assets/power-off.png'
 import menu from '../../../assets/menu.png'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../../features/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { removeToken } from '../../../features/tokenSlice'
 
-const Navbar = () =>{
+const Navbar = ({navLinks}) =>{
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -29,10 +29,9 @@ const Navbar = () =>{
                     <img src={movie_image} alt="movie"  className={`${styles.movieImg}`}/>
                 </div>
                 <ul className={`${styles.uls} md:gap-[50px] gap-[30px] font-bold text-[18px]`}>
-                    <li>Home</li>
-                    <li>Contact</li>
-                    <li>Profile</li>
-                    <li>Links</li>
+                    {navLinks.map((e)=>{
+                        return <li key={e.name}><Link to={e.link}>{e.name}</Link></li>
+                    })}
                 </ul>
                 <div className={`flex justify-end pr-[30px]`}>
                     <img src={logout} alt="dfs"  className={`${styles.logoutImg}`} onClick={handleLogout}/>
