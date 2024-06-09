@@ -8,19 +8,19 @@ const UserHome = () =>{
     const navLinks =[
         {
             name:'Home',
-            link:'/home'
+            link:'/user'
         },
         {
             name:'Contact',
-            link:'/contact'
+            link:'/user'
         },
         {
             name:'Profile',
-            link:'/Profile'
+            link:'/user'
         },
         {
             name:'Links',
-            link:'/links'
+            link:'/user'
         }
     ]
 

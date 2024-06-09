@@ -13,7 +13,7 @@ const AdminHome = () =>{
         },
         {
             name:'Show User',
-            link:'/showuser'
+            link:'/admin'
         }
     ]
     return <>

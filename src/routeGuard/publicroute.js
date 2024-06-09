@@ -12,6 +12,7 @@ const  PublicRoute =()=>{
     useEffect(() => {
          try{
                 let localStorageToken = token;
+                console.log(token);
                 if (!localStorageToken) {
                     localStorageToken = localStorage.getItem('token');
                 }   

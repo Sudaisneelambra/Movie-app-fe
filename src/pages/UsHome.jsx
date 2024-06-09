@@ -11,7 +11,6 @@ const UsHome =()=>{
         axiosInstance.get('/user/allCards')
         .then((res)=>{
             if(res.data.success){
-                console.log('anu');
                 setdata(res.data.data)
             }
         })

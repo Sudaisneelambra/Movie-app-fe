@@ -26,8 +26,16 @@ const MovieCards = ({data}) =>{
     },[token,dispatch,data])
 
     const handleDelete = (id)=>{
-        console.log(id);
-        // axiosInstance.delete(`/admin/delete${id}`)
+        axiosInstance.delete(`/admin/delete/${id}`)
+        .then((res)=>{
+            if(res.data.success){
+                alert(res.data.message)
+                window.location.reload()
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 
     return <>
