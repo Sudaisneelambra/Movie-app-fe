@@ -6,6 +6,7 @@ import {jwtDecode} from 'jwt-decode';
 
 const  PublicRoute =()=>{
     const  token = useSelector(selectToken);
+    console.log(token);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 

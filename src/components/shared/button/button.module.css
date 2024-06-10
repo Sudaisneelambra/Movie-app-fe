@@ -10,3 +10,13 @@
     color: white;
 
 }
+
+.button-apply{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    color: white;
+    background: #460c0c;
+}
