@@ -64,6 +64,24 @@ const MovieCards = ({ data }) => {
     }
   };
 
+  const calCulateRating = (fullratingArray)=>{
+    console.log(fullratingArray);
+        const totalRate = fullratingArray.reduce((i,e)=>{
+            return i+=e.rating
+        },0)
+        console.log();
+        return Math.round(totalRate / fullratingArray?.length)
+  }
+  const [actualRate, setActualRate] = useState(0)
+
+  useEffect(()=>{
+    console.log(data?.fullratings?.length);
+    if(data?.fullratings?.length>0){
+        const rating = calCulateRating(data?.fullratings);
+        setActualRate(rating);
+    }
+  },[data?.fullratings])
+
   return (
     <>
       <div className={`${styles.mains} flex justify-center items-center py-2`}>
@@ -78,10 +96,14 @@ const MovieCards = ({ data }) => {
           />
         </Link>
         <h1 className={` font-bold text-[22px] text-[red]`}>{data.title}</h1>
-        <h3 className={`text-left w-[80%] mt-4`}>
+        <h3 className={`text-left w-[90%] mt-4`}>
           {" "}
           <span className="font-bold">Casts</span> : {data.cast}
         </h3>
+        <div className="flex justify-between  w-[90%]">
+            <h1 className=" font-bold text-[green]">Total Rating : {actualRate}</h1>
+            <Rating rating={actualRate}/>
+        </div>
         <div className="flex mt-3 justify-evenly w-full items-center">
           <Rating setrating={setRating} rating={rating} />
           <Button

@@ -4,7 +4,9 @@ import styles from './Rating.module.css';
 const Rating = ({setrating,rating}) => {
 
   const handleStarClick = (index) => {
-    setrating(index+1)
+    if (setrating) {
+        setrating(index + 1);
+      }
   };
 
   return (
