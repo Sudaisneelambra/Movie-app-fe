@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axiosInstance from "../../../utils/axios.instance";
+import { useLocation } from "react-router-dom";
 
 // Validation schema
 const MovieSchema = Yup.object().shape({
@@ -16,46 +17,76 @@ const MovieSchema = Yup.object().shape({
   image: Yup.mixed().required("Image is required"),
 });
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const CardAdd = () => {
   const [submittedValues, setSubmittedValues] = useState(null);
+  const [id, setId] = useState(null);
+  const [movie, setMovie] = useState({
+    title: "",
+    cast: "",
+    image: null,
+  });
 
-  const handleSubmit = async(values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(false);
     setSubmittedValues(values);
+    
+    if (!values.image) {
+      alert("Image is required");
+      return;
+    }
+
     let formData = new FormData();
     formData.append('title', values.title);
     formData.append('cast', values.cast);
     formData.append('image', values.image);
 
-    await axiosInstance.post('/admin/addCard',formData)
-    .then((res)=>{
-        if(res.data.success){
-            alert(res.data.message)
+    const url = id ? `/admin/editCard/${id}` : '/admin/addCard';
+
+    await axiosInstance.post(url, formData)
+      .then((res) => {
+        if (res.data.success) {
+          alert(res.data.message);
         } else {
-            alert(res.data.message)
+          alert(res.data.message);
         }
-    })
-    .catch((err)=>{
+      })
+      .catch((err) => {
         console.log(err);
-
-    })
-
+      });
   };
+
+  let query = useQuery();
+
+  useEffect(() => {
+    const cardId = query.get("id");
+    if (cardId) {
+      setId(cardId);
+      axiosInstance.get(`/admin/getCard/${cardId}`)
+        .then((res) => {
+          if (res.data.success) {
+            setMovie(res.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [id]);
 
   return (
     <>
       <div>
         <h1 className="w-full text-center my-5 text-[30px] font-bold">
-          Add Movie
+          {id ? "Edit Movie" : "Add Movie"}
         </h1>
 
-        
         <Formik
-          initialValues={{
-            title: "",
-            cast: "",
-            image: null,
-          }}
+          initialValues={movie}
+          enableReinitialize={true}
           validationSchema={MovieSchema}
           onSubmit={handleSubmit}
         >
@@ -132,15 +163,15 @@ const CardAdd = () => {
 
         {submittedValues && (
           <div className="w-full flex justify-center items-center mt-7">
-                <div className="shadow-lg p-3 rounded-md">
-                <h2>Submitted Movie Details</h2>
-                <p>
+            <div className="shadow-lg p-3 rounded-md">
+              <h2>Submitted Movie Details</h2>
+              <p>
                 <strong>Title:</strong> {submittedValues.title}
-                </p>
-                <p>
+              </p>
+              <p>
                 <strong>Cast:</strong> {submittedValues.cast}
-                </p>
-                <img src={URL.createObjectURL(submittedValues.image)} alt="Movie Poster" />
+              </p>
+              <img src={URL.createObjectURL(submittedValues.image)} alt="Movie Poster" />
             </div>
           </div>
         )}

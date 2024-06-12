@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './Rating.module.css';
 
 const Rating = ({setrating,rating}) => {

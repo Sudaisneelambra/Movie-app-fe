@@ -9,14 +9,20 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import axiosInstance from "../../../utils/axios.instance";
 import Rating from "../../Rating/Rating";
+import { useNavigate } from "react-router-dom";
+
 
 const MovieCards = ({ data }) => {
-  const [decodedToken, setdecodedToken] = useState(null);
 
+  const [decodedToken, setdecodedToken] = useState(null);
   const [rating, setRating] = useState(0);
 
   const dispatch = useDispatch();
+    const navigate = useNavigate()
+
   const token = useSelector(selectToken);
+
+
   useEffect(() => {
     let tokens = token;
     if (!tokens) {
@@ -53,7 +59,6 @@ const MovieCards = ({ data }) => {
           } else {
             alert(res.data.message);
             setRating(0);
-
           }
         })
         .catch((err) => {
@@ -64,23 +69,26 @@ const MovieCards = ({ data }) => {
     }
   };
 
-  const calCulateRating = (fullratingArray)=>{
-    console.log(fullratingArray);
-        const totalRate = fullratingArray.reduce((i,e)=>{
-            return i+=e.rating
-        },0)
-        console.log();
-        return Math.round(totalRate / fullratingArray?.length)
-  }
-  const [actualRate, setActualRate] = useState(0)
+  const calCulateRating = (fullratingArray) => {
+    const totalRate = fullratingArray.reduce((i, e) => {
+      return (i += e.rating);
+    }, 0);
+    return Math.round(totalRate / fullratingArray?.length);
+  };
+  const [actualRate, setActualRate] = useState(0);
 
-  useEffect(()=>{
-    console.log(data?.fullratings?.length);
-    if(data?.fullratings?.length>0){
-        const rating = calCulateRating(data?.fullratings);
-        setActualRate(rating);
+  useEffect(() => {
+    if (data?.fullratings?.length > 0) {
+      const rating = calCulateRating(data?.fullratings);
+      setActualRate(rating);
     }
-  },[data?.fullratings])
+  }, [data?.fullratings]);
+
+
+  const handleEdit =(id)=>{
+    navigate(`/admin/addcard?id=${id}`)
+  }
+
 
   return (
     <>
@@ -101,22 +109,28 @@ const MovieCards = ({ data }) => {
           <span className="font-bold">Casts</span> : {data.cast}
         </h3>
         <div className="flex justify-between  w-[90%]">
-            <h1 className=" font-bold text-[green]">Total Rating : {actualRate}</h1>
-            <Rating rating={actualRate}/>
+          <h1 className=" font-bold text-[green]">
+            Total Rating : {actualRate}
+          </h1>
+          <Rating rating={actualRate} />
         </div>
         <div className="flex mt-3 justify-evenly w-full items-center">
-          <Rating setrating={setRating} rating={rating} />
-          <Button
-            buttonvalue={"apply"}
-            classname={"apply"}
-            handleClick={() => {
-              handlesubmitrating(data?._id);
-            }}
-          />
+          {!decodedToken?.isAdmin && (
+            <>
+              <Rating setrating={setRating} rating={rating} />
+              <Button
+                buttonvalue={"apply"}
+                classname={"apply"}
+                handleClick={() => {
+                  handlesubmitrating(data?._id);
+                }}
+              />
+            </>
+          )}
         </div>
         {decodedToken?.isAdmin && (
           <div className=" w-full flex justify-evenly mt-3">
-            <Button buttonvalue={"Edit"} classname={"signup"} />
+            <Button buttonvalue={"Edit"} classname={"signup"} handleClick={()=>handleEdit(data?._id)}/>
             <Button
               buttonvalue={"Delete"}
               classname={"signup"}
